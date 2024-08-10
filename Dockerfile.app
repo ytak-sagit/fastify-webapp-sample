@@ -1,18 +1,32 @@
 # syntax = docker/dockerfile:1
 
-ARG NODE_VERSION=20.16.0
-FROM node:${NODE_VERSION}-slim
+ARG UBUNTU_VERSION=22.04
+FROM mcr.microsoft.com/vscode/devcontainers/base:ubuntu-${UBUNTU_VERSION}
 
-USER node
+# パッケージをアップデート
+RUN apt update && apt upgrade
+
+# Node.jsのインストール
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt install -y nodejs
+
+ARG USERNAME=vscode
+ARG GROUPNAME=vscode
+USER ${USERNAME}
+
+WORKDIR /app/e2e
+RUN mkdir node_modules
 
 # 必要なファイル群のみをコンテナへコピー
-COPY --chown=node:node ./.env.example /app/.env
-COPY --chown=node:node ./*.json /app
-COPY --chown=node:node ./db /app/db
-COPY --chown=node:node ./src /app/src
+COPY --chown=${USERNAME}:${GROUPNAME} ./.env.example /app/.env
+COPY --chown=${USERNAME}:${GROUPNAME} ./*.json /app
+COPY --chown=${USERNAME}:${GROUPNAME} ./db /app/db
+COPY --chown=${USERNAME}:${GROUPNAME} ./src /app/src
+COPY --chown=${USERNAME}:${GROUPNAME} ./e2e /app/e2e
 
 WORKDIR /app
-
 RUN mkdir node_modules \
     # NOTE: APPコンテナからDBコンテナへ通信するために、.envのPGHOST環境変数をDBコンテナ名へ置換
     && sed -i 's/PGHOST=localhost/PGHOST=fastify-db/' .env
+
+CMD [ "node" ]
