@@ -9,7 +9,8 @@
     "dev:with-db": "docker compose up -d && nodemon src/index.js",
     "dev": "nodemon src/index.js",
     "build": "npm run db:migrate",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test:e2e": "cd e2e && npm run test"
   },
   "repository": {
     "type": "git",
