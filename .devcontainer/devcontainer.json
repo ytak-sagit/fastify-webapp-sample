@@ -1,0 +1,11 @@
+{
+    "name": "Fastify Webapp Sample",
+    "dockerComposeFile": [
+        "../compose.db.yaml",
+        "../compose.app.yaml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/app",
+    "remoteUser": "node",
+    "updateRemoteUserUID": true
+}

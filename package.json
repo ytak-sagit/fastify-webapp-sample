@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "db:migrate": "node db/migrate.mjs",
-    "dev": "docker compose up -d && nodemon src/index.js",
+    "dev:with-db": "docker compose up -d && nodemon src/index.js",
+    "dev": "nodemon src/index.js",
     "build": "npm run db:migrate",
     "start": "node src/index.js"
   },
