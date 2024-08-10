@@ -20,5 +20,7 @@ exports.config = {
   include: {
     I: './steps_file.js'
   },
+  translation: 'en-US',
+  vocabularies: ['./vocabularies.json'],
   name: 'e2e'
 }
