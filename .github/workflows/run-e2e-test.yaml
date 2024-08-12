@@ -37,7 +37,7 @@ jobs:
         run: npm run test
         working-directory: ./e2e
         env:
-          BASE_URL: "fastify-webapp-sample-staging-9128.up.railway.app"
+          BASE_URL: "https://fastify-webapp-sample-staging-9128.up.railway.app"
           HEADLESS: true
 
       - name: Load test report history
