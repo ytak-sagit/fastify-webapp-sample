@@ -3,14 +3,11 @@ name: Run E2E Test
 run-name: Run E2E Test
 
 on:
-  # workflow_run:
-  #   workflows:
-  #     - "Deploy to Staging"
-  #   types:
-  #     - completed
-  push:
-    branches:
-      - release
+  workflow_run:
+    workflows:
+      - "Deploy to Staging"
+    types:
+      - completed
 
 permissions:
   contents: read
