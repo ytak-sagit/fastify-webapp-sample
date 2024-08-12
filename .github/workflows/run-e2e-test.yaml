@@ -37,6 +37,9 @@ jobs:
           BASE_URL: "https://fastify-webapp-sample-staging-9128.up.railway.app"
           HEADLESS: true
 
+      - name: List files
+        run: ls ./e2e
+
       - name: Load test report history
         uses: actions/checkout@v4
         if: always()
