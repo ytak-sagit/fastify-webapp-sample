@@ -37,6 +37,13 @@ jobs:
           BASE_URL: "https://fastify-webapp-sample-staging-9128.up.railway.app"
           HEADLESS: true
 
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-allure-results
+          path: e2e/allure-results
+          retention-days: 1
+
       - name: Load test report history
         uses: actions/checkout@v4
         if: always()
@@ -44,6 +51,12 @@ jobs:
         with:
           ref: gh-pages
           pages: gh-pages
+
+      - name: Download test results
+        uses: actions/download-artifact@v4
+        with:
+          name: e2e-allure-results
+          path: e2e/allure-results
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
