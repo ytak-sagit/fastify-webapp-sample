@@ -48,8 +48,10 @@ jobs:
     if: always()
 
     permissions:
-      contents: read
-      pages: write  # GitHub Pagesへのpushが必要なため、権限を追加
+      # gh-pagesブランチとGitHub Pagesへのpushが必要なため、権限を追加
+      actions: write
+      checks: write
+      contents: write
     
     steps:
       - name: Load test report history
