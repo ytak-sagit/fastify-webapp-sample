@@ -2,12 +2,7 @@ name: Run E2E Test
 
 run-name: Run E2E Test
 
-on:
-  workflow_run:
-    workflows:
-      - "Deploy to Staging"
-    types:
-      - completed
+on: push
 
 jobs:
   run-e2e:
