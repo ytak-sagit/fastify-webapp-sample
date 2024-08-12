@@ -49,6 +49,7 @@ jobs:
 
     permissions:
       # gh-pagesブランチとGitHub Pagesへのpushが必要なため、権限を追加
+      # 参考: https://zenn.dev/osawa_koki/articles/a63b96a2707a8f
       actions: write
       checks: write
       contents: write
