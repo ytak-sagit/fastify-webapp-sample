@@ -8,6 +8,8 @@ services:
     working_dir: /app
     environment:
       - PGHOST=fastify-db
+      # NOTE: Playwrightで使用するブラウザを、node_modules配下にインストールさせる
+      - PLAYWRIGHT_BROWSERS_PATH=0
     volumes:
       - ./e2e:/app/e2e
       - e2e_node_modules:/app/e2e/node_modules
