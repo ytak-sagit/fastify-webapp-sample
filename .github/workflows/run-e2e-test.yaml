@@ -53,8 +53,8 @@ jobs:
         if: always()
         with:
           gh-pages: gh-pages
-          allure_results: e2e/allure-results  # このデータを基に、
-          allure_history: allure-history      # このディレクトリにレポートを生成
+          allure_results: ./e2e/allure-results  # このデータを基に、
+          allure_history: allure-history        # このディレクトリにレポートを生成
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v4
