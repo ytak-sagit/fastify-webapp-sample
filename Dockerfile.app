@@ -10,6 +10,10 @@ RUN apt update && apt upgrade
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt install -y nodejs
 
+# Javaのインストール
+# NOTE: Allure Reportのレポート生成に必要
+RUN apt install -y openjdk-17-jdk
+
 ARG USERNAME=vscode
 ARG GROUPNAME=vscode
 USER ${USERNAME}
