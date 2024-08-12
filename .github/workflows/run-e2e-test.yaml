@@ -34,7 +34,7 @@ jobs:
         working-directory: ./e2e
 
       - name: Run E2E Test
-        run: npm run Test
+        run: npm run test
         working-directory: ./e2e
         env:
           BASE_URL: "fastify-webapp-sample-staging-9128.up.railway.app"
