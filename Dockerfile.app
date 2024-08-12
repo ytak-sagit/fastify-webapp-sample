@@ -22,6 +22,7 @@ WORKDIR /app/e2e
 RUN mkdir node_modules
 
 # 必要なファイル群のみをコンテナへコピー
+COPY --chown=${USERNAME}:${GROUPNAME} ./.husky /app/.husky
 COPY --chown=${USERNAME}:${GROUPNAME} ./.env.example /app/.env
 COPY --chown=${USERNAME}:${GROUPNAME} ./*.json /app
 COPY --chown=${USERNAME}:${GROUPNAME} ./db /app/db
