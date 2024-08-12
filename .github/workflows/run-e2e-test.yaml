@@ -39,3 +39,27 @@ jobs:
         env:
           BASE_URL: "fastify-webapp-sample-staging-9128.up.railway.app"
           HEADLESS: true
+
+      - name: Load test report history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          pages: gh-pages
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh-pages: gh-pages
+          allure_history: allure-history
+          allure_results: e2e/allure-results
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v4
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
