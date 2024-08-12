@@ -16,4 +16,16 @@ Scenario('ログインし、お弁当を注文し、お弁当を受け取る', (
   I.fillField('受け取り日', '2025/08/01');
   I.fillField('受け取り目安時間', '12:00AM');
   I.click('注文を確定する');
+
+  session('お弁当屋さんのブラウザ', () => {
+    I.amOnPage('/');
+    I.click('ログインする');
+    I.fillField('ユーザー名', 'admin');
+    I.fillField('パスワード', 'admin');
+    I.click('ログイン');
+
+    I.click('注文を管理する');
+    I.click('この注文を引き渡しました');
+    I.see('引き渡し済みの注文です');
+  });
 });
