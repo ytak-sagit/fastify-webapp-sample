@@ -34,6 +34,7 @@ jobs:
 
       - name: List files
         run: ls ./e2e
+        if: always()
 
       - name: Load test report history
         uses: actions/checkout@v4
