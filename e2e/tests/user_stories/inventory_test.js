@@ -26,36 +26,45 @@ Scenario(`
 
       // ある商品の詳細ページを開く
       I.amOnPage('/items');
-      itemContainer = locate('tr').withText(itemName);
-      I.click('商品を編集', itemContainer);
-
-      // デフォルトの注文可能数に「10」を設定する
-      I.fillField('デフォルトの注文可能数', '10');
-      I.click('変更');
+      I.shouldBeOnItemListPage((I) => {
+        itemContainer = locate('tr').withText(itemName);
+        I.click('商品を編集', itemContainer);
+        I.shouldBeOnItemDetailPage((I) => {
+          // デフォルトの注文可能数に「10」を設定する
+          I.fillField('デフォルトの注文可能数', '10');
+          I.click('変更');
+        });
+      });
     });
 
     // ## ユーザーはその商品を当日に10個注文する
     I.amAnonimousUser((I) => {
       // 商品を10個カートに入れる
       I.amOnPage('/items');
-      I.fillField(
-        locate('input').after(
-          locate('label').withText('カートに入れる数量').inside(itemContainer)
-        ),
-        '10'
-      );
-      I.click('カートに入れる', itemContainer);
+      I.shouldBeOnItemListPage((I) => {
+        I.fillField(
+          locate('input').after(
+            locate('label').withText('カートに入れる数量').inside(itemContainer)
+          ),
+          '10'
+        );
+        I.click('カートに入れる', itemContainer);
+      });
 
       // 注文画面を開き、当日の日付を入力する
       I.click('カートを見る');
-      I.fillField('お名前（受取時に必要です）', 'ユーザー１');
-      I.fillField('電話番号（連絡時に必要です）', '09000000000');
-      I.fillField('受け取り日', utils.now.format('YYYY/MM/DD'));
-      I.fillField('受け取り目安時間', utils.now.add(1, 'hour').format('hh:mmA'));
+      I.shouldBeOnOrderPage((I) => {
+        I.fillField('お名前（受取時に必要です）', 'ユーザー１');
+        I.fillField('電話番号（連絡時に必要です）', '09000000000');
+        I.fillField('受け取り日', utils.now.format('YYYY/MM/DD'));
+        I.fillField('受け取り目安時間', utils.now.add(1, 'hour').format('hh:mmA'));
+      });
 
       // 注文を確定する
       I.click('注文を確定する');
-      I.see('ご注文が完了しました');
+      I.shouldBeOnOrderCompletePage((I) => {
+        I.see('ご注文が完了しました');
+      });
     });
   }
 );
