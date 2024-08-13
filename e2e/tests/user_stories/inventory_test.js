@@ -4,12 +4,12 @@ Scenario(`
   店舗スタッフは、デフォルトの注文可能数を変更できる。
   ユーザーは、デフォルトの注文可能数まで商品を注文できる。`,
   ({ I, utils }) => {
-    let itemContainer;
+    let itemName;
 
     I.amStoreStaff((I) => {
       // ## 事前準備: 商品データを作成する
 
-      const itemName = I.haveItem();
+      itemName = I.haveItem();
 
       // ## 店舗スタッフはある商品のデフォルトの注文可能数を10個に設定する
 
@@ -19,8 +19,7 @@ Scenario(`
       // ある商品の詳細ページを開く
       I.amOnPage('/items');
       I.shouldBeOnItemListPage((I) => {
-        itemContainer = locate('tr').withText(itemName);
-        I.click('商品を編集', itemContainer);
+        I.click(I.locateWithinItem(itemName).商品を編集);
         I.shouldBeOnItemDetailPage((I) => {
           // デフォルトの注文可能数に「10」を設定する
           I.fillField('デフォルトの注文可能数', '10');
@@ -34,13 +33,8 @@ Scenario(`
       // 商品を10個カートに入れる
       I.amOnPage('/items');
       I.shouldBeOnItemListPage((I) => {
-        I.fillField(
-          locate('input').after(
-            locate('label').withText('カートに入れる数量').inside(itemContainer)
-          ),
-          '10'
-        );
-        I.click('カートに入れる', itemContainer);
+        I.fillField(I.locateWithinItem(itemName).カートに入れる数量, '10');
+        I.click(I.locateWithinItem(itemName).カートに入れる);
       });
 
       // 注文画面を開き、当日の日付を入力する
