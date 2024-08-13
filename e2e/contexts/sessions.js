@@ -4,6 +4,7 @@ const {
   shouldBeOnOrderPage,
   shouldBeOnOrderCompletePage,
 } = require('./pages');
+const { haveItem } = require('./prerequisites');
 
 module.exports = {
 
@@ -11,6 +12,7 @@ module.exports = {
     const I = actor({
       shouldBeOnItemListPage,
       shouldBeOnItemDetailPage,
+      haveItem,
     });
     session('StoreStaff', () => {
       I.amOnPage('/');
