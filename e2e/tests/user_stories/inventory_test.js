@@ -4,41 +4,38 @@ Scenario(`
   店舗スタッフは、デフォルトの注文可能数を変更できる。
   ユーザーは、デフォルトの注文可能数まで商品を注文できる。`,
   ({ I, utils }) => {
-    // ## 事前準備: 商品データを作成する
+    let itemContainer;
 
-    // 店舗スタッフとしてログインする
-    I.amOnPage('/');
-    I.click('ログインする');
-    I.fillField('ユーザー名', 'admin');
-    I.fillField('パスワード', 'admin');
-    I.click('ログイン');
+    I.amStoreStaff((I) => {
+      // ## 事前準備: 商品データを作成する
 
-    // 商品を追加する
-    // 商品名はタイムスタンプなどからユニークなものを設定する
-    // 例えば「牛ハラミ弁当-テスト-20230416120600」などのようにする
-    I.click('商品を追加する');
-    const itemName = `牛ハラミ弁当-テスト-${utils.now.format('YYYYMMDDHHmmss')}`;
-    I.fillField('商品名', itemName);
-    I.fillField('商品説明', 'テスト用の商品です');
-    I.fillField('価格', '500');
-    I.click('追加');
+      // 商品を追加する
+      // 商品名はタイムスタンプなどからユニークなものを設定する
+      // 例えば「牛ハラミ弁当-テスト-20230416120600」などのようにする
+      I.click('商品を追加する');
+      const itemName = `牛ハラミ弁当-テスト-${utils.now.format('YYYYMMDDHHmmss')}`;
+      I.fillField('商品名', itemName);
+      I.fillField('商品説明', 'テスト用の商品です');
+      I.fillField('価格', '500');
+      I.click('追加');
 
-    // ## 店舗スタッフはある商品のデフォルトの注文可能数を10個に設定する
+      // ## 店舗スタッフはある商品のデフォルトの注文可能数を10個に設定する
 
-    // 店舗スタッフとしてログインする
-    // ->事前準備でログイン済のため省略
+      // 店舗スタッフとしてログインする
+      // ->事前準備でログイン済のため省略
 
-    // ある商品の詳細ページを開く
-    I.amOnPage('/items');
-    const itemContainer = locate('tr').withText(itemName);
-    I.click('商品を編集', itemContainer);
+      // ある商品の詳細ページを開く
+      I.amOnPage('/items');
+      itemContainer = locate('tr').withText(itemName);
+      I.click('商品を編集', itemContainer);
 
-    // デフォルトの注文可能数に「10」を設定する
-    I.fillField('デフォルトの注文可能数', '10');
-    I.click('変更');
+      // デフォルトの注文可能数に「10」を設定する
+      I.fillField('デフォルトの注文可能数', '10');
+      I.click('変更');
+    });
 
     // ## ユーザーはその商品を当日に10個注文する
-    session('user', () => {
+    I.amAnonimousUser((I) => {
       // 商品を10個カートに入れる
       I.amOnPage('/items');
       I.fillField(
