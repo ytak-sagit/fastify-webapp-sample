@@ -9,15 +9,7 @@ Scenario(`
     I.amStoreStaff((I) => {
       // ## 事前準備: 商品データを作成する
 
-      // 商品を追加する
-      // 商品名はタイムスタンプなどからユニークなものを設定する
-      // 例えば「牛ハラミ弁当-テスト-20230416120600」などのようにする
-      I.click('商品を追加する');
-      const itemName = `牛ハラミ弁当-テスト-${utils.now.format('YYYYMMDDHHmmss')}`;
-      I.fillField('商品名', itemName);
-      I.fillField('商品説明', 'テスト用の商品です');
-      I.fillField('価格', '500');
-      I.click('追加');
+      const itemName = I.haveItem();
 
       // ## 店舗スタッフはある商品のデフォルトの注文可能数を10個に設定する
 
