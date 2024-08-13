@@ -15,7 +15,28 @@ module.exports = {
   },
 
   shouldBeOnItemListPage: (fn) => {
-    const I = actor({});
+    const locateItem = (itemName) => locate('tr').withText(itemName);
+    const editItem = (itemName) => locate('a')
+        .withText('商品を編集')
+        .inside(locateItem(itemName))
+        .as('商品を編集');
+    const quontity = (itemName) => locate('input')
+        .after(locate('label').withText('カートに入れる数量'))
+        .inside(locateItem(itemName))
+        .as('カートに入れる数量');
+    const intoCart = (itemName) => locate('input')
+        .withAttr({ value: 'カートに入れる' })
+        .inside(locateItem(itemName))
+        .as('カートに入れる');
+
+    const I = actor({
+      locateItem,
+      locateWithinItem: (itemName) => ({
+        商品を編集: editItem(itemName),
+        カートに入れる数量: quontity(itemName),
+        カートに入れる: intoCart(itemName),
+      }),
+    });
     I.seeCurrentUrlEquals('/items');
     I.seeInTitle('商品一覧');
     fn(I);
