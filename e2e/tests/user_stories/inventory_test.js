@@ -6,22 +6,14 @@ Scenario(`
   ({ I, utils }) => {
     let itemName;
 
+    // ## 店舗スタッフはある商品のデフォルトの注文可能数を10個に設定する
     I.amStoreStaff((I) => {
-      // ## 事前準備: 商品データを作成する
-
       itemName = I.haveItem();
 
-      // ## 店舗スタッフはある商品のデフォルトの注文可能数を10個に設定する
-
-      // 店舗スタッフとしてログインする
-      // ->事前準備でログイン済のため省略
-
-      // ある商品の詳細ページを開く
       I.amOnPage('/items');
       I.shouldBeOnItemListPage((I) => {
         I.click(I.locateWithinItem(itemName).商品を編集);
         I.shouldBeOnItemDetailPage((I) => {
-          // デフォルトの注文可能数に「10」を設定する
           I.fillField('デフォルトの注文可能数', '10');
           I.click('変更');
         });
@@ -30,14 +22,12 @@ Scenario(`
 
     // ## ユーザーはその商品を当日に10個注文する
     I.amAnonimousUser((I) => {
-      // 商品を10個カートに入れる
       I.amOnPage('/items');
       I.shouldBeOnItemListPage((I) => {
         I.fillField(I.locateWithinItem(itemName).カートに入れる数量, '10');
         I.click(I.locateWithinItem(itemName).カートに入れる);
       });
 
-      // 注文画面を開き、当日の日付を入力する
       I.click('カートを見る');
       I.shouldBeOnOrderPage((I) => {
         I.fillField('お名前（受取時に必要です）', 'ユーザー１');
@@ -46,7 +36,6 @@ Scenario(`
         I.fillField('受け取り目安時間', utils.now.add(1, 'hour').format('hh:mmA'));
       });
 
-      // 注文を確定する
       I.click('注文を確定する');
       I.shouldBeOnOrderCompletePage((I) => {
         I.see('ご注文が完了しました');
