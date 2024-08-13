@@ -1,5 +1,8 @@
 module.exports = {
-
+  /**
+   * 注文完了画面にいることを検証し、引数で指定した処理を実行する
+   * @param {function(I): void} fn
+   */
   shouldBeOnOrderCompletePage: (fn) => {
     const I = actor({});
     I.seeCurrentUrlEquals('/order');
@@ -7,6 +10,10 @@ module.exports = {
     fn(I);
   },
 
+  /**
+   * 注文画面にいることを検証し、引数で指定した処理を実行する
+   * @param {function(I): void} fn
+   */
   shouldBeOnOrderPage: (fn) => {
     const I = actor({});
     I.seeCurrentUrlEquals('/order');
@@ -14,6 +21,10 @@ module.exports = {
     fn(I);
   },
 
+  /**
+   * 商品一覧画面にいることを検証し、引数で指定した処理を実行する
+   * @param {function(I): void} fn
+   */
   shouldBeOnItemListPage: (fn) => {
     const locateItem = (itemName) => locate('tr').withText(itemName);
     const editItem = (itemName) => locate('a')
@@ -42,6 +53,10 @@ module.exports = {
     fn(I);
   },
 
+  /**
+   * 商品編集画面にいることを検証し、引数で指定した処理を実行する
+   * @param {function(I): void} fn
+   */
   shouldBeOnItemDetailPage: (fn) => {
     const I = actor({});
     // URLが「/items/2/edit」のようになることを期待する
