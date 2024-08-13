@@ -1,7 +1,17 @@
+const {
+  shouldBeOnItemListPage,
+  shouldBeOnItemDetailPage,
+  shouldBeOnOrderPage,
+  shouldBeOnOrderCompletePage,
+} = require('./pages');
+
 module.exports = {
 
   amStoreStaff: (fn) => {
-    const I = actor({});
+    const I = actor({
+      shouldBeOnItemListPage,
+      shouldBeOnItemDetailPage,
+    });
     session('StoreStaff', () => {
       I.amOnPage('/');
       I.click('ログインする');
@@ -13,7 +23,11 @@ module.exports = {
   },
 
   amAnonimousUser: (fn) => {
-    const I = actor({});
+    const I = actor({
+      shouldBeOnItemListPage,
+      shouldBeOnOrderPage,
+      shouldBeOnOrderCompletePage,
+    });
     session('AnonimousUser', () => {
       fn(I);
     });
