@@ -19,6 +19,7 @@
     "playwright": "^1.30.0"
   },
   "devDependencies": {
+    "codeceptjs-applitoolshelper": "^1.4.7",
     "dotenv": "^16.4.5"
   }
 }

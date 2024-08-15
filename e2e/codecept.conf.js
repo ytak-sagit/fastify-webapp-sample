@@ -25,6 +25,10 @@ exports.config = {
       diffFolder: './output/diff',
       prepareBaseImage: process.env.PREPARE_BASE_IMAGE === 'true',
     },
+    // ApplitoolsHelper: {
+    //   require: 'codeceptjs-applitoolshelper',
+    //   applitoolskey: process.env.APPLITOOLS_API_KEY,
+    // },
   },
   include: {
     I: './steps_file.js',
