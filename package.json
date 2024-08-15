@@ -10,7 +10,8 @@
     "dev": "nodemon src/index.js",
     "build": "npm run db:migrate",
     "start": "node src/index.js",
-    "test:e2e": "npx start-server-and-test dev http://localhost:8080 'cd e2e && npm run test'"
+    "test:e2e": "npx start-server-and-test dev http://localhost:8080 'cd e2e && npm run test'",
+    "test:ut": "jest"
   },
   "repository": {
     "type": "git",
