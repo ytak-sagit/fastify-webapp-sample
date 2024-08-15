@@ -17,7 +17,18 @@ exports.config = {
       url: process.env.BASE_URL,
       show: true,
       browser: 'chromium'
-    }
+    },
+    ResembleHelper: {
+      require: 'codeceptjs-resemblehelper',
+      screenshotFolder: './output/',
+      baseFolder: './baseImages/',
+      diffFolder: './output/diff',
+      prepareBaseImage: process.env.PREPARE_BASE_IMAGE === 'true',
+    },
+    // ApplitoolsHelper: {
+    //   require: 'codeceptjs-applitoolshelper',
+    //   applitoolskey: process.env.APPLITOOLS_API_KEY,
+    // },
   },
   include: {
     I: './steps_file.js',
