@@ -20,7 +20,7 @@ Scenario("ユーザーは、名前と電話番号、受け取り予定時間を�
     I.click('カートを見る');
     I.shouldBeOnOrderPage((I) => {
       I.fillField('お名前（受取時に必要です）', 'ユーザー１');
-      I.fillField('電話番号（連絡時に必要です）', '09000000000');
+      I.fillField('電話番号（連絡時に必要です）', '090-0000-0000');
       I.fillField('受け取り日', utils.now.format('YYYY/MM/DD'));
       I.fillField('受け取り目安時間', utils.now.add(1, 'hour').format('hh:mmA'));
       I.click('注文を確定する');
