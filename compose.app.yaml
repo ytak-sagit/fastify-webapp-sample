@@ -12,6 +12,7 @@ services:
       - PLAYWRIGHT_BROWSERS_PATH=0
     volumes:
       - ./e2e:/app/e2e
+      - ./src:/app/src
       - e2e_node_modules:/app/e2e/node_modules
       - node_modules:/app/node_modules
     tty: true
