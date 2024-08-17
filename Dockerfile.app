@@ -12,7 +12,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 
 # Javaのインストール
 # NOTE: Allure Reportのレポート生成に必要
-RUN apt install -y openjdk-17-jdk
+# NOTE: [インストール参考] https://hub.docker.com/_/eclipse-temurin
+ENV JAVA_HOME=/opt/java/openjdk
+COPY --from=eclipse-temurin:17 $JAVA_HOME $JAVA_HOME
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 ARG USERNAME=vscode
 ARG GROUPNAME=vscode
