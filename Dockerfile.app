@@ -1,15 +1,31 @@
 # syntax = docker/dockerfile:1
 
+ARG NODE_VERSION=20.16
 ARG UBUNTU_VERSION=22.04
+
+# cache our node version for installing later
+FROM node:${NODE_VERSION}-slim AS node
+
+# base image
 FROM mcr.microsoft.com/vscode/devcontainers/base:ubuntu-${UBUNTU_VERSION}
 
 # パッケージをアップデート
 RUN apt update && apt upgrade
 
-# Node.jsのインストール
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt install -y nodejs \
+# tiniのインストール
+# Avoid running nodejs process as PID 1 (use tini)
+# 参考: https://zenn.dev/jrsyo/articles/e42de409e62f5d
+RUN apt -qq install -y --no-install-recommends tini \
     && rm -rf /var/lib/apt/lists/*
+EXPOSE 3000
+
+# Node.jsのインストール
+# 参考: https://note.milldea.com/posts/two-ways-to-install-nodejs-with-fixed-version-in-dockerfile
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s /usr/local/bin/node /usr/local/bin/nodejs \
+ && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+ && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npx
 
 # Javaのインストール
 # NOTE: Allure Reportのレポート生成に必要
@@ -38,4 +54,6 @@ RUN mkdir node_modules \
     # NOTE: APPコンテナからDBコンテナへ通信するために、.envのPGHOST環境変数をDBコンテナ名へ置換
     && sed -i 's/PGHOST=localhost/PGHOST=fastify-db/' .env
 
+# tiniでnodeを起動する
+ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD [ "node" ]
