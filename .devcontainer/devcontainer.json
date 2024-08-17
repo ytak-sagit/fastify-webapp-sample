@@ -12,7 +12,7 @@
     // "onCreateCommand": {
     //     "npm-install": "set -ex && npm i",
     //     // TODO: 実行のたびにPlaywrightインストールが行われるため、インストール済の場合はスキップできるようにしたい
-    //     "npm-install-e2e": "set -ex && cd e2e && npm i && npx playwright install --with-deps"
+    //     "npm-install-e2e": "set -ex && cd e2e && npm i && npx playwright install-deps && npx playwright install"
     // },
     "customizations": {
         "vscode": {
