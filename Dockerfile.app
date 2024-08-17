@@ -8,7 +8,8 @@ RUN apt update && apt upgrade
 
 # Node.jsのインストール
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt install -y nodejs
+    && apt install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 # Javaのインストール
 # NOTE: Allure Reportのレポート生成に必要
