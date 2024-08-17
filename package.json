@@ -10,8 +10,22 @@
     "dev": "nodemon src/index.js",
     "build": "npm run db:migrate",
     "start": "node src/index.js",
-    "test:e2e": "npx start-server-and-test dev http://localhost:8080 'cd e2e && npm run test'",
+    "start:instrument": "npm run instrument && nyc node ./.nyc_instrumented/server/index.js",
+    "start:instrument:with-db": "npm run instrument && docker compose up -d && nyc node ./.nyc_instrumented/server/index.js",
+    "instrument": "nyc instrument src ./.nyc_instrumented/server",
+    "report": "nyc report",
+    "test:e2e": "npx start-server-and-test start:instrument http://localhost:8080 'cd e2e && npm run test'",
     "test:ut": "jest"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/**/*.js"
+    ],
+    "reporter": [
+      "text",
+      "html"
+    ]
   },
   "repository": {
     "type": "git",
@@ -49,6 +63,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "nodemon": "^2.0.20",
+    "nyc": "^17.0.0",
     "postgrator-cli": "^6.0.0",
     "start-server-and-test": "^2.0.5",
     "ts-node": "^10.9.1",
